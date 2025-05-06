@@ -9,18 +9,31 @@ import { CognitoUserSession } from "amazon-cognito-identity-js";
 export default function HomePage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-
   const router = useRouter();
 
   useEffect(() => {
+    const token = localStorage.getItem("id_token");
+
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log(payload);
+        setUsername(payload.name || payload.email || "Google User");
+        setEmail(payload.email || "Google Email");
+        return;
+      } catch (error) {
+        console.error("Failed to parse token:", error);
+      }
+    }
+
     const user = userPool.getCurrentUser();
     if (!user) {
       router.push("/signin");
       return;
     }
 
-    const username = user.getUsername();
-    setUsername(username);
+    const uname = user.getUsername();
+    setUsername(uname);
 
     user.getSession((err: Error | null, session: CognitoUserSession | null) => {
       if (err || !session?.isValid()) {
@@ -46,7 +59,8 @@ export default function HomePage() {
   }, [router]);
 
   const handleSignOut = () => {
-    signOutUser();
+    localStorage.removeItem("id_token"); // clear Google token
+    signOutUser(); // clear Cognito session
     router.push("/signin");
   };
 

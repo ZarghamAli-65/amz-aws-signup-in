@@ -80,6 +80,23 @@ export default function LoginPage() {
         {message && <p className="mt-2 text-sm">{message}</p>}
       </form>
 
+      <button
+        type="button"
+        onClick={() => {
+          const clientId = "k3896ujiu6r8lglufs1d2fht6";
+          const redirectUri = "http://localhost:3000/auth/callback";
+          const domain = "my-applogin.auth.us-east-1.amazoncognito.com";
+          const googleLoginUrl = `https://${domain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+            redirectUri
+          )}&identity_provider=Google&scope=email+openid+profile`;
+
+          router.push(googleLoginUrl);
+        }}
+        className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 cursor-pointer mt-4"
+      >
+        Continue with Google
+      </button>
+
       <div className="mt-4 text-sm text-center">
         <p>
           Don&apos;t have an account?{" "}
