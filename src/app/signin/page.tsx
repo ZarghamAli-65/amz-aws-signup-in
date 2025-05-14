@@ -42,15 +42,15 @@ export default function LoginPage() {
 
   // Redirect to Cognito's hosted UI for Google login
   const handleGoogleLogin = () => {
-    const clientId = "2mh12kgapdv9kodpkrner1oppi";
-    const cognitoDomain = "zargham-domain.auth.us-east-1.amazoncognito.com";
+    const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
+    const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!;
     const redirectUri = "http://localhost:3000/auth/callback";
     const googleUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Google&prompt=login`;
     router.push(googleUrl);
   };
   const handleMicrosoftLogin = () => {
-    const clientId = "2mh12kgapdv9kodpkrner1oppi";
-    const cognitoDomain = "zargham-domain.auth.us-east-1.amazoncognito.com";
+    const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
+    const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!;
     const redirectUri = "http://localhost:3000/auth/callback";
     const microsoftUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Microsoft&prompt=login`;
 

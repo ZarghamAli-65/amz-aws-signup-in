@@ -33,7 +33,7 @@ export default function CallbackPage() {
             },
             body: new URLSearchParams({
               grant_type: "authorization_code",
-              client_id: "2mh12kgapdv9kodpkrner1oppi",
+              client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
               code,
               redirect_uri: "http://localhost:3000/auth/callback",
             }),
