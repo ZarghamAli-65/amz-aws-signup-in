@@ -45,7 +45,7 @@ export default function LoginPage() {
     const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
     const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!;
     const redirectUri =
-      "https://amz-aws-signup-fg7upuzor-zarghamali.vercel.app/auth/callback";
+      "https://amz-aws-signup-om6bf8w58-zarghamali.vercel.app/auth/callback";
     const googleUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Google&prompt=login`;
     router.push(googleUrl);
   };
@@ -54,7 +54,7 @@ export default function LoginPage() {
     const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
     const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!;
     const redirectUri =
-      "https://amz-aws-signup-fg7upuzor-zarghamali.vercel.app/auth/callback";
+      "https://amz-aws-signup-om6bf8w58-zarghamali.vercel.app/auth/callback";
     const microsoftUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Microsoft&prompt=login`;
     router.push(microsoftUrl);
   };
