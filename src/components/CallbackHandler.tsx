@@ -34,7 +34,7 @@ export default function CallbackHandler() {
               client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
               code,
               redirect_uri:
-                "https://amz-aws-signup-fg7upuzor-zarghamali.vercel.app/auth/callback",
+                "https://amz-aws-signup-in.vercel.app/auth/callback",
             }),
           }
         );
