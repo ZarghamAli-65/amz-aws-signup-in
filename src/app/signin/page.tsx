@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import { userPool } from "../../lib/cognitoConfig";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -40,7 +41,6 @@ export default function LoginPage() {
     });
   };
 
-  // Redirect to Cognito's hosted UI for Google login
   const handleGoogleLogin = () => {
     const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
     const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!;
@@ -48,82 +48,115 @@ export default function LoginPage() {
     const googleUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Google&prompt=login`;
     router.push(googleUrl);
   };
+
   const handleMicrosoftLogin = () => {
     const clientId = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!;
     const cognitoDomain = process.env.NEXT_PUBLIC_COGNITO_DOMAIN!;
     const redirectUri = "http://localhost:3000/auth/callback";
     const microsoftUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Microsoft&prompt=login`;
-
     router.push(microsoftUrl);
   };
 
   return (
-    <div className="flex flex-col justify-center text-center p-8 mt-8 max-w-md mx-auto border">
-      <h1 className="text-2xl font-bold mb-4">Sign In</h1>
-      <form onSubmit={handleLogin} className="space-y-4">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-          className="w-full p-2 border rounded"
+    <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200">
+      <div className="hidden md:block md:w-1/2 relative">
+        <Image
+          src="/images/loginImage.png"
+          alt="Login Background"
+          fill
+          priority
         />
-
-        <div className="relative">
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-            className="w-full p-2 border rounded pr-20"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-600 text-sm cursor-pointer"
-          >
-            {showPassword ? "Hide" : "Show"}
-          </button>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 cursor-pointer"
-        >
-          Login
-        </button>
-
-        {message && <p className="mt-2 text-sm">{message}</p>}
-      </form>
-      <div className="mt-6">
-        <button
-          onClick={handleGoogleLogin}
-          className="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 cursor-pointer"
-        >
-          Login with Google
-        </button>
       </div>
-      <button
-        onClick={handleMicrosoftLogin}
-        className="w-full bg-blue-700 text-white p-2 rounded hover:bg-blue-800 cursor-pointer mt-2"
-      >
-        Login with Microsoft
-      </button>
 
-      <div className="mt-4 text-sm text-center">
-        <p>
-          Don&apos;t have an account?{" "}
-          <a href="/signup" className="text-blue-500 underline">
-            Sign up
-          </a>
-        </p>
-        <p>
-          <Link href="/forgot-password" className="text-blue-500 underline">
-            Forgot password?
-          </Link>
-        </p>
+      <div className="flex flex-col justify-center items-center m-auto  p-6 sm:p-10 bg-white shadow-lg rounded-4xl ">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-extrabold text-blue-700">
+              Welcome Back!
+            </h1>
+            <p className="mt-2 text-gray-600 font-medium">
+              Sign in to continue with us
+            </p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg pr-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-600 text-sm font-semibold hover:text-blue-800"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+              <p className="mt-2 text-sm">
+                <Link
+                  href="/forgot-password"
+                  className="text-blue-500 hover:underline hover:text-blue-800"
+                >
+                  Forgot password?
+                </Link>
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
+            >
+              Sign In
+            </button>
+
+            {message && (
+              <p className="text-sm text-red-600 font-medium">{message}</p>
+            )}
+          </form>
+
+          <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300" />
+            <span className="px-3 text-gray-500 text-sm font-semibold">OR</span>
+            <div className="flex-grow h-px bg-gray-300" />
+          </div>
+
+          <div className="space-y-3">
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition"
+            >
+              Sign In with Google
+            </button>
+            <button
+              onClick={handleMicrosoftLogin}
+              className="w-full bg-blue-700 text-white p-3 rounded-lg hover:bg-blue-800 transition"
+            >
+              Sign In with Microsoft
+            </button>
+          </div>
+
+          <div className="mt-6 text-center text-sm">
+            <p>
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="text-blue-500 hover:underline">
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

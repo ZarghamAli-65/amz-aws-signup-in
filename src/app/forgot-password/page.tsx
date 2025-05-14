@@ -35,25 +35,37 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="p-8 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Forgot Password</h1>
-      <form onSubmit={handleForgotPassword} className="space-y-4">
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username or Email"
-          required
-          className="w-full p-2 border rounded"
-        />
-        <button
-          type="submit"
-          className="w-full bg-yellow-600 text-white p-2 rounded hover:bg-yellow-700"
-        >
-          Send Reset Code
-        </button>
-        {message && <p className="mt-2 text-sm">{message}</p>}
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-yellow-100 to-yellow-300 p-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-2">
+          Forgot Password
+        </h1>
+        <p className="text-sm text-center text-gray-500 mb-6">
+          Enter your email or username to receive a reset code
+        </p>
+
+        <form onSubmit={handleForgotPassword} className="space-y-4">
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username or Email"
+            required
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-yellow-600 text-white p-3 rounded-lg hover:bg-yellow-700 transition-colors font-semibold"
+          >
+            Send Reset Code
+          </button>
+
+          {message && (
+            <p className="mt-2 text-sm text-center text-red-600">{message}</p>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
