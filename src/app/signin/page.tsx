@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import { userPool } from "../../lib/cognitoConfig";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -37,6 +38,23 @@ export default function LoginPage() {
         setMessage(`Login failed: ${err.message || "Unknown error"}`);
       },
     });
+  };
+
+  // Redirect to Cognito's hosted UI for Google login
+  const handleGoogleLogin = () => {
+    const clientId = "2mh12kgapdv9kodpkrner1oppi";
+    const cognitoDomain = "zargham-domain.auth.us-east-1.amazoncognito.com";
+    const redirectUri = "http://localhost:3000/auth/callback";
+    const googleUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Google&prompt=login`;
+    router.push(googleUrl);
+  };
+  const handleMicrosoftLogin = () => {
+    const clientId = "2mh12kgapdv9kodpkrner1oppi";
+    const cognitoDomain = "zargham-domain.auth.us-east-1.amazoncognito.com";
+    const redirectUri = "http://localhost:3000/auth/callback";
+    const microsoftUrl = `https://${cognitoDomain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid+profile+email&identity_provider=Microsoft&prompt=login`;
+
+    router.push(microsoftUrl);
   };
 
   return (
@@ -79,22 +97,19 @@ export default function LoginPage() {
 
         {message && <p className="mt-2 text-sm">{message}</p>}
       </form>
-
+      <div className="mt-6">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 cursor-pointer"
+        >
+          Login with Google
+        </button>
+      </div>
       <button
-        type="button"
-        onClick={() => {
-          const clientId = "k3896ujiu6r8lglufs1d2fht6";
-          const redirectUri = "http://localhost:3000/auth/callback";
-          const domain = "my-applogin.auth.us-east-1.amazoncognito.com";
-          const googleLoginUrl = `https://${domain}/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
-            redirectUri
-          )}&identity_provider=Google&scope=email+openid+profile`;
-
-          router.push(googleLoginUrl);
-        }}
-        className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 cursor-pointer mt-4"
+        onClick={handleMicrosoftLogin}
+        className="w-full bg-blue-700 text-white p-2 rounded hover:bg-blue-800 cursor-pointer mt-2"
       >
-        Continue with Google
+        Login with Microsoft
       </button>
 
       <div className="mt-4 text-sm text-center">
@@ -105,9 +120,9 @@ export default function LoginPage() {
           </a>
         </p>
         <p>
-          <a href="/forgot-password" className="text-blue-500 underline">
+          <Link href="/forgot-password" className="text-blue-500 underline">
             Forgot password?
-          </a>
+          </Link>
         </p>
       </div>
     </div>

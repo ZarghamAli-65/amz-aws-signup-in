@@ -6,40 +6,64 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function CallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const code = searchParams.get("code");
+  const error = searchParams.get("error");
+  const errorDescription = searchParams.get("error_description");
 
   useEffect(() => {
+    if (error) {
+      console.error("OAuth Error:", errorDescription || error);
+      router.push(
+        `/signin?error=${encodeURIComponent(errorDescription || error)}`
+      );
+      return;
+    }
+
     if (!code) return;
 
     const exchangeCodeForToken = async () => {
-      const res = await fetch(
-        "https://my-applogin.auth.us-east-1.amazoncognito.com/oauth2/token",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            grant_type: "authorization_code",
-            client_id: "k3896ujiu6r8lglufs1d2fht6",
-            code,
-            redirect_uri: "http://localhost:3000/auth/callback",
-          }),
-        }
-      );
+      try {
+        const res = await fetch(
+          "https://zargham-domain.auth.us-east-1.amazoncognito.com/oauth2/token",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              grant_type: "authorization_code",
+              client_id: "2mh12kgapdv9kodpkrner1oppi",
+              code,
+              redirect_uri: "http://localhost:3000/auth/callback",
+            }),
+          }
+        );
 
-      const data = await res.json();
-      if (data.id_token) {
-        console.log("Google login successful:", data);
-        localStorage.setItem("id_token", data.id_token); // Or use cookie/session
-        router.push("/");
-      } else {
-        console.error("Login failed", data);
+        const data = await res.json();
+        console.log("Token response:", data);
+
+        if (res.ok && data.id_token) {
+          const decodedToken = JSON.parse(atob(data.id_token.split(".")[1]));
+
+          let providerName = "Cognito";
+          if (decodedToken.identities && decodedToken.identities.length > 0) {
+            providerName = decodedToken.identities[0].providerName;
+          }
+
+          localStorage.setItem("id_token", data.id_token);
+          localStorage.setItem("provider", providerName);
+          router.push("/");
+        } else {
+          console.error("Token exchange failed:", data);
+        }
+      } catch (error) {
+        console.error("Token exchange error:", error);
       }
     };
 
     exchangeCodeForToken();
-  }, [code, router]);
+  }, [code, error, errorDescription, router]);
 
-  return <p className="p-4 text-center">Logging in with Google...</p>;
+  return <p className="p-4 text-center">Logging in ...</p>;
 }
