@@ -66,7 +66,7 @@ export default function ConfirmPage() {
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white p-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+            className="w-full cursor-pointer bg-purple-600 text-white p-3 rounded-lg font-semibold hover:bg-purple-700 transition"
           >
             Confirm
           </button>

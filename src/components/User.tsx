@@ -45,17 +45,24 @@ export default function HomePage() {
   }
 
   return (
-    <div className="p-8 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">
-        Welcome {name} ({provider} Account)!
-      </h1>
-      <p className="text-xl font-bold p-2">Email: {email}</p>
-      <button
-        onClick={handleSignOut}
-        className="mt-4 bg-red-600 text-white p-2 rounded hover:bg-red-700 cursor-pointer"
-      >
-        Sign Out
-      </button>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-200 p-4">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-center">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-blue-700 mb-4">
+          Welcome {name}{" "}
+          <span className="text-gray-600">({provider} Account)</span>!
+        </h1>
+
+        <p className="text-lg sm:text-xl font-medium text-gray-700 mb-6">
+          Email: <span className="font-semibold text-blue-600">{email}</span>
+        </p>
+
+        <button
+          onClick={handleSignOut}
+          className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg text-sm font-semibold transition duration-200 cursor-pointer"
+        >
+          Sign Out
+        </button>
+      </div>
     </div>
   );
 }

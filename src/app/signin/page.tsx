@@ -101,7 +101,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-600 text-sm font-semibold hover:text-blue-800"
+                className="absolute right-3 top-1/2 cursor-pointer transform -translate-y-1/2 text-blue-600 text-sm font-semibold hover:text-blue-800"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -117,7 +117,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
+              className="w-full cursor-pointer bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
             >
               Sign In
             </button>
@@ -136,13 +136,13 @@ export default function LoginPage() {
           <div className="space-y-3">
             <button
               onClick={handleGoogleLogin}
-              className="w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition"
+              className="w-full cursor-pointer bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition"
             >
               Sign In with Google
             </button>
             <button
               onClick={handleMicrosoftLogin}
-              className="w-full bg-blue-700 text-white p-3 rounded-lg hover:bg-blue-800 transition"
+              className="w-full cursor-pointer bg-blue-700 text-white p-3 rounded-lg hover:bg-blue-800 transition"
             >
               Sign In with Microsoft
             </button>
@@ -151,7 +151,10 @@ export default function LoginPage() {
           <div className="mt-6 text-center text-sm">
             <p>
               Don&apos;t have an account?{" "}
-              <Link href="/signup" className="text-blue-500 hover:underline">
+              <Link
+                href="/signup"
+                className="text-blue-500 hover:underline cursor-pointer"
+              >
                 Sign up
               </Link>
             </p>

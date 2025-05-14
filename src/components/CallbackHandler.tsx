@@ -22,18 +22,21 @@ export default function CallbackHandler() {
 
     const exchangeCodeForToken = async () => {
       try {
-        const res = await fetch("https://your-cognito-domain/oauth2/token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            grant_type: "authorization_code",
-            client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
-            code,
-            redirect_uri: "http://localhost:3000/auth/callback",
-          }),
-        });
+        const res = await fetch(
+          "https://zargham-domain.auth.us-east-1.amazoncognito.com/oauth2/token",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              grant_type: "authorization_code",
+              client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
+              code,
+              redirect_uri: "http://localhost:3000/auth/callback",
+            }),
+          }
+        );
 
         const data = await res.json();
 

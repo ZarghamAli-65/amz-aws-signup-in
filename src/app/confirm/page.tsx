@@ -86,7 +86,7 @@ export default function ResetPasswordPage() {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
+            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition-colors font-semibold cursor-pointer"
           >
             Reset Password
           </button>

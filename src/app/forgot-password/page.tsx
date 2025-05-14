@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
 
           <button
             type="submit"
-            className="w-full bg-yellow-600 text-white p-3 rounded-lg hover:bg-yellow-700 transition-colors font-semibold"
+            className="w-full bg-yellow-600 text-white p-3 rounded-lg hover:bg-yellow-700 transition-colors cursor-pointer font-semibold"
           >
             Send Reset Code
           </button>
