@@ -1,6 +1,0 @@
-google client id : 286424502436-f9comn13hi3m10hd3ob5o2ok0cpnono7.apps.googleusercontent.com
-
-google cleint secret : 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
-
-cognito domain : https://my-applogin.auth.us-east-1.amazoncognito.com
-
