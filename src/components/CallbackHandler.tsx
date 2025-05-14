@@ -33,7 +33,8 @@ export default function CallbackHandler() {
               grant_type: "authorization_code",
               client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID!,
               code,
-              redirect_uri: "http://localhost:3000/auth/callback",
+              redirect_uri:
+                "https://amz-aws-signup-fg7upuzor-zarghamali.vercel.app/auth/callback",
             }),
           }
         );
